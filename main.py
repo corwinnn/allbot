@@ -45,7 +45,7 @@ def getMessage():
 @server.route("/")
 def webhook():
     bot.remove_webhook()
-    bot.set_webhook(url='https://your_heroku_project.com/' + config.token)
+    bot.set_webhook(url='https://sleepy-dawn-47510.herokuapp.com/' + config.token)
     return "!", 200
 
 
