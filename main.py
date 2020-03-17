@@ -28,8 +28,4 @@ def command_help(message):
 
 
 if __name__ == '__main__':
-    while(True):
-        try:
-            bot.polling(none_stop=True, interval=0)
-        except Exception:
-            pass
+    bot.polling(none_stop=True, interval=0)
