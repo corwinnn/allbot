@@ -39,6 +39,16 @@ def command_help(message):
         json.dump(chat_user, f)
 
 
+@bot.message_handler(commands=['info'])
+def command_help(message):
+    cid = message.chat.id
+    greet = 'Nice chat! I know them: '
+    people = ' '.join(list(chat_user[str(cid)])) + '\n' + 'Groups:\n'
+    groups = '\n'.join([(g + ': ' + ' '.join(list(chat_group[str(cid)][g]))) for g in chat_group[str(cid)]])
+    bot.send_message(cid, greet + people + groups)
+    bot.send_message(cid, ' '.join(list(chat_user[str(cid)])))
+
+
 @bot.message_handler(commands=['group'])
 def command_help(message):
     msg = bot.reply_to(message, "Name group and members. Your answer should be like group_name @member1 @member2...")
@@ -79,6 +89,11 @@ def get_text_messages(message):
         bot.send_message(cid, ' '.join(list(chat_group[str(cid)][text])) or 'Empty group')
         with open('groups.json', 'w') as f:
             json.dump(chat_group, f)
+    uname = message.from_user.username
+    if str(cid) not in chat_user:
+        chat_user[str(cid)] = []
+    if '@' + uname not in chat_user[str(cid)]:
+        chat_user[str(cid)].append('@' + uname)
 
 
 @server.route('/' + config.token, methods=['POST'])
