@@ -34,7 +34,8 @@ def command_help(message):
 @bot.message_handler(commands=['all'])
 def command_help(message):
     cid = message.chat.id
-    bot.send_message(cid, ' '.join(list(chat_user[str(cid)])))
+    if str(cid) in chat_user:
+        bot.send_message(cid, ' '.join(list(chat_user[str(cid)])))
     with open('chats.json', 'w') as f:
         json.dump(chat_user, f)
 
@@ -46,13 +47,12 @@ def command_help(message):
     if str(cid) in chat_user:
         people = ' '.join(list(chat_user[str(cid)])) + '\n' + 'Groups:\n'
     else:
-        people = 'Nobody'
+        people = 'Nobody' + '\n' + 'Groups:\n'
     if str(cid) in chat_group:
         groups = '\n'.join([(g + ': ' + ' '.join(list(chat_group[str(cid)][g]))) for g in chat_group[str(cid)]])
     else:
         groups = 'Nothing'
     bot.send_message(cid, greet + people + groups)
-    bot.send_message(cid, ' '.join(list(chat_user[str(cid)])))
 
 
 @bot.message_handler(commands=['group'])
@@ -91,7 +91,7 @@ def process_group_name(message):
 def get_text_messages(message):
     cid = message.chat.id
     text = message.text
-    if text in chat_group[str(cid)]:
+    if str(cid) in chat_group and text in chat_group[str(cid)]:
         bot.send_message(cid, ' '.join(list(chat_group[str(cid)][text])) or 'Empty group')
         with open('groups.json', 'w') as f:
             json.dump(chat_group, f)
