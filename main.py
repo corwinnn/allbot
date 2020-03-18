@@ -45,6 +45,12 @@ def command_help(message):
     bot.register_next_step_handler(msg, process_group_name)
 
 
+@bot.message_handler(commands=['log'])
+def command_help(message):
+    bot.send_message(message.chat.id, str(chat_group))
+    bot.send_message(message.chat.id, str(chat_user))
+
+
 def process_group_name(message):
     cid = message.chat.id
     text = message.text.split()
@@ -69,9 +75,9 @@ def process_group_name(message):
 def get_text_messages(message):
     cid = message.chat.id
     text = message.text
-    if message.text in chat_group[str(cid)]:
-        bot.send_message(cid, ' '.join(list(chat_group[str(cid)][text])))
-        with open('groups.json.json', 'w') as f:
+    if text in chat_group[str(cid)]:
+        bot.send_message(cid, ' '.join(list(chat_group[str(cid)][text])) or 'Empty group')
+        with open('groups.json', 'w') as f:
             json.dump(chat_group, f)
 
 
