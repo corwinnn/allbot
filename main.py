@@ -54,20 +54,19 @@ def command_all(message):
         bot.send_message(cid, ', '.join(members))
 
 
-# @bot.message_handler(commands=['info'])
-# @add_user
-# def command_help(message):
-#     cid = message.chat.id
-#     greet = 'Nice chat! I know them: '
-#     if str(cid) in chat_user:
-#         people = ' '.join(list(chat_user[str(cid)])) + '\n' + 'Groups:\n'
-#     else:
-#         people = 'Nobody' + '\n' + 'Groups:\n'
-#     if str(cid) in chat_group:
-#         groups = '\n'.join([(g + ': ' + ' '.join(list(chat_group[str(cid)][g]))) for g in chat_group[str(cid)]])
-#     else:
-#         groups = 'Nothing'
-#     bot.send_message(cid, greet + people + groups)
+@bot.message_handler(commands=['info'])
+@add_user
+def command_help(message):
+    cid = message.chat.id
+    greet = 'Nice chat! I have such knowledge:\n\n'
+
+    member_group = db.member_group_list(cid)
+    greet += 'All: ' + ', '.join([member for member, group in member_group if group == ALL_ALIAS]) + '\n\n'
+
+    groups = [group for _, group in member_group if group != ALL_ALIAS]
+    for group_name in groups:
+        greet += f'{group_name}: ' + ', '.join([member for member, group in member_group if group == group_name]) + '\n'
+    bot.send_message(cid, greet)
 
 
 @bot.message_handler(commands=['group'])

@@ -65,7 +65,8 @@ class SQLighter:
             )
 
             self.cursor.execute(
-                'INSERT into member (cid, username, alias) VALUES' + ', '.join(['(%s, %s, %s)' for _ in range(len(names))]),
+                'INSERT into member (cid, username, alias) VALUES' + ', '.join(
+                    ['(%s, %s, %s)' for _ in range(len(names))]),
                 tuple(chain(*zip(repeat(cid), names, repeat(alias))))
             )
 
@@ -78,3 +79,11 @@ class SQLighter:
             result = self.cursor.fetchall()
             return [res[2] for res in result]
 
+    def member_group_list(self, cid):
+        with self.connection:
+            self.cursor.execute(
+                'SELECT * FROM member WHERE cid = %s',
+                (cid,)
+            )
+            result = self.cursor.fetchall()
+            return [(res[1], res[2]) for res in result]
