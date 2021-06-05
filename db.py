@@ -20,6 +20,11 @@ class SQLighter:
         self.cursor = self.connection.cursor()
 
     def add_subscriber(self, uid, name):
+        """
+        Add bot user
+        :param uid: telegram user id
+        :param name: telegram user name
+        """
         with self.connection:
             return self.cursor.execute(
                 'INSERT INTO subscriber (uid, username) VALUES(%s, %s)',
@@ -27,6 +32,12 @@ class SQLighter:
             )
 
     def add_member(self, cid, username, alias):
+        """
+        Add chat member with an alias
+        :param cid: telegram chat id
+        :param username: telegram user name
+        :param alias: alias of a group the user is a member of
+        """
         with self.connection:
             self.cursor.execute(
                 'SELECT * FROM member WHERE cid = %s AND username = %s AND alias = %s',
@@ -40,6 +51,11 @@ class SQLighter:
                 )
 
     def subscriber_exists(self, uid):
+        """
+        Check if user already in database
+        :param uid: telegram user id
+        :return: if user already in database
+        """
         with self.connection:
             self.cursor.execute(
                 'SELECT * FROM subscriber WHERE uid = %s',
@@ -49,6 +65,13 @@ class SQLighter:
             return len(result)
 
     def member_exists(self, cid, username, alias):
+        """
+        Check if user has such an alias in this chat
+        :param cid: telegram chat id
+        :param username: telegram user name
+        :param alias: group alias
+        :return:
+        """
         with self.connection:
             self.cursor.execute(
                 'SELECT * FROM member WHERE cid = %s AND username = %s AND alias = %s',
@@ -58,6 +81,12 @@ class SQLighter:
             return len(result)
 
     def create_alias(self, cid, alias, names):
+        """
+        Create new alias
+        :param cid: telegram chat id
+        :param alias: alias for a new group
+        :param names: list of group members' user names
+        """
         with self.connection:
             self.cursor.execute(
                 'DELETE FROM member WHERE alias = %s',
@@ -71,6 +100,12 @@ class SQLighter:
             )
 
     def get_alias_list(self, cid, alias):
+        """
+        Get list of group members under this alias
+        :param cid: telegram chat id
+        :param alias: alias for a group
+        :return: list of group members' user names
+        """
         with self.connection:
             self.cursor.execute(
                 'SELECT * FROM member WHERE cid = %s AND alias = %s',
@@ -80,6 +115,11 @@ class SQLighter:
             return [res[2] for res in result]
 
     def member_group_list(self, cid):
+        """
+        Get list of all members' aliases in the chat
+        :param cid: telegram chat id
+        :return: list of all pairs (username, alias) for this chat
+        """
         with self.connection:
             self.cursor.execute(
                 'SELECT * FROM member WHERE cid = %s',
