@@ -1,4 +1,3 @@
-import config
 import json
 import logging
 import os
@@ -7,7 +6,7 @@ import telebot
 from flask import Flask, request
 
 
-bot = telebot.TeleBot(config.token)
+bot = telebot.TeleBot(os.environ.get('BOT_TOKEN'))
 server = Flask(__name__)
 
 logger = telebot.logger
