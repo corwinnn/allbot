@@ -1,8 +1,8 @@
 import config
 import json
 import logging
-import telebot
 import os
+import telebot
 
 from flask import Flask, request
 
