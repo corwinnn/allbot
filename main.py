@@ -51,7 +51,7 @@ def command_all(message):
     cid = message.chat.id
     members = db.get_alias_list(cid, ALL_ALIAS)
     if members:
-        bot.send_message(', '.join(members))
+        bot.send_message(cid, ', '.join(members))
 
 
 # @bot.message_handler(commands=['info'])
@@ -115,7 +115,7 @@ def get_text_messages(message):
         for alias in aliases:
             members = db.get_alias_list(cid, alias)
             if members:
-                bot.send_message(', '.join(members))
+                bot.send_message(cid, ', '.join(members))
 
 
 @server.route('/' + TOKEN, methods=['POST'])
