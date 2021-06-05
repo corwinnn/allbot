@@ -11,6 +11,7 @@ TOKEN = os.environ.get('BOT_TOKEN')
 APPLINK = os.environ.get('LINK')
 
 ALL_ALIAS = os.environ.get('ALL_ALIAS')
+ALIAS_START = '@'
 
 bot = telebot.TeleBot(TOKEN)
 server = Flask(__name__)
@@ -109,7 +110,7 @@ def process_members(message):
 def get_text_messages(message):
     cid = message.chat.id
     words = message.text.split()
-    aliases = [w[2:] for w in words if w.startswith('@')]
+    aliases = [w[len(ALIAS_START):] for w in words if w.startswith(ALIAS_START)]
     if aliases:
         for alias in aliases:
             members = db.get_alias_list(cid, alias)
