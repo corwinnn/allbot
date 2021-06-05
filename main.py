@@ -102,7 +102,7 @@ def process_members(message):
         return
 
     for name in names:
-        db.add_member(cid, '@' + name, ALL_ALIAS)
+        db.add_member(cid, name, ALL_ALIAS)
 
 
 @bot.message_handler(content_types=['text'])
