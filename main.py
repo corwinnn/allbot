@@ -24,8 +24,6 @@ db = SQLighter()
 def add_user(func):
     """
     Decorator for adding a user to the database if we see him for the first time
-    :param func:
-    :return:
     """
 
     def wrapper(*args, **kwargs):
@@ -40,13 +38,42 @@ def add_user(func):
             return func(*args, **kwargs)
         else:
             bot.send_message(cid, 'I was born for group chats, please use me only in groups.')
+            send_help(cid)
 
     return wrapper
 
 
-@bot.message_handler(commands=['add'])
+@bot.message_handler(commands=['start', 'help'])
 @add_user
 def command_help(message):
+    """
+    Command for help message
+    """
+    cid = message.chat.id
+    send_help(cid)
+
+
+def send_help(cid):
+    """
+    Send help message
+    :param cid: telegram chat id
+    """
+    text = '''
+        Hi! I want to help you to call your friends in group chats.\n
+        /all or @all - I'll tag all known members of the chat (I know members that have written something after adding me
+        to the chat or people that were added by /add command.\n
+        /add - add people manually\n
+        /group - add alias for a group. For example, you'll be able to call all boys in the chat by @boys, and all girls by @girls\n
+        /info - learn about current known members and aliases\n
+        For сomplaints and suggestions - write to @MikeHeller\n
+        Public code repository - https://github.com/corwinnn/allbot
+        '''
+    bot.send_message(cid, text)
+
+
+@bot.message_handler(commands=['add'])
+@add_user
+def command_add(message):
     """
     Command for adding users to user list after /all command
     """
@@ -142,7 +169,7 @@ def get_text_messages(message):
     if aliases:
         for alias in aliases:
             if alias == 'all':
-                alias = ALL_ALIAS # processing @all
+                alias = ALL_ALIAS  # processing @all
             members = db.get_alias_list(cid, alias)
             if members:
                 bot.send_message(cid, ', '.join(members))
