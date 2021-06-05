@@ -20,7 +20,7 @@ class SQLighter:
     def add_user(self, uid, name):
         with self.connection:
             return self.cursor.execute(
-                f'INSERT INTO subscriber (uid, username) VALUES({uid, name})')
+                f'INSERT INTO subscriber (uid, username) VALUES({uid}, {name})')
 
     def subscriber_exists(self, uid):
         with self.connection:
