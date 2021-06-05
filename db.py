@@ -65,11 +65,8 @@ class SQLighter:
             )
 
             self.cursor.execute(
-                'INSERT into member (cid, username, alias) VALUES' +
-                ', '.join(['({}, {}, {})' for _ in range(len(names))]).format(*chain(*zip(repeat(cid),
-                                                                                          names,
-                                                                                          repeat(alias)
-                                                                                          )))
+                'INSERT into member (cid, username, alias) VALUES' + ', '.join(['(%s, %s, %s)' for _ in range(len(names))]),
+                tuple(chain(*zip(repeat(cid), names, repeat(alias))))
             )
 
     def get_alias_list(self, cid, alias):
@@ -80,3 +77,4 @@ class SQLighter:
             )
             result = self.cursor.fetchall()
             return [res[2] for res in result]
+
