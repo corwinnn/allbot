@@ -14,7 +14,7 @@ class SQLighter:
             host=DATABASE_HOST,
             dbname=DATABASE,
             user=DATABASE_USER,
-            password=DATABASE_USER)
+            password=DATABASE_PASSWORD)
         self.cursor = self.connection.cursor()
 
     def add_user(self, uid, name):
