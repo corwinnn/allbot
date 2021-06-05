@@ -20,11 +20,16 @@ db = SQLighter()
 
 def add_user(func):
     def wrapper(*args, **kwargs):
+        print('1q')
         message = args[0]
+        print('2q')
         uid = message.from_user.id
         name = message.from_user.username
+        print('3q')
         if not db.subscriber_exists(uid):
+            print('4q')
             db.add_user(uid, name)
+            print('5q')
         return func(*args, **kwargs)
 
 
@@ -83,6 +88,7 @@ def command_help(message):
 @bot.message_handler(commands=['log'])
 @add_user
 def command_help(message):
+    print('6q')
     bot.send_message(message.chat.id, str(chat_group))
     bot.send_message(message.chat.id, str(chat_user))
 
