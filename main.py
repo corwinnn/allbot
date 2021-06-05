@@ -110,7 +110,9 @@ def process_members(message):
 def get_text_messages(message):
     cid = message.chat.id
     words = message.text.split()
-    aliases = [w for w in words if w.startswith('@@')]
+    print(words)
+    aliases = [w[2:] for w in words if w.startswith('@@')]
+    print(aliases)
     if aliases:
         for alias in aliases:
             members = db.get_alias_list(cid, alias)
