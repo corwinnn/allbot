@@ -31,6 +31,7 @@ def add_user(func):
             db.add_user(uid, name)
             print('5q')
         return func(*args, **kwargs)
+    return wrapper
 
 
 with open('chats.json') as f:
