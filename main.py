@@ -5,8 +5,10 @@ import telebot
 
 from flask import Flask, request
 
+TOKEN = os.environ.get('BOT_TOKEN')
+APPLINK = os.environ.get('LINK')
 
-bot = telebot.TeleBot(os.environ.get('BOT_TOKEN'))
+bot = telebot.TeleBot(TOKEN)
 server = Flask(__name__)
 
 logger = telebot.logger
@@ -101,7 +103,7 @@ def get_text_messages(message):
         chat_user[str(cid)].append('@' + uname)
 
 
-@server.route('/' + config.token, methods=['POST'])
+@server.route('/' + TOKEN, methods=['POST'])
 def getMessage():
     bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
     return "!", 200
@@ -110,7 +112,7 @@ def getMessage():
 @server.route("/")
 def webhook():
     bot.remove_webhook()
-    bot.set_webhook(url='https://sleepy-dawn-47510.herokuapp.com/' + config.token)
+    bot.set_webhook(url=APPLINK + TOKEN)
     return "!", 200
 
 
