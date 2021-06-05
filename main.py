@@ -27,7 +27,7 @@ def add_user(func):
         cid = message.chat.id
         name = message.from_user.username
         if not db.subscriber_exists(uid):
-            db.add_user(uid, name)
+            db.add_subscriber(uid, name)
         if cid < 0:
             db.add_member(cid, '@' + name, ALL_ALIAS)
             return func(*args, **kwargs)
