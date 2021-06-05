@@ -5,6 +5,8 @@ import telebot
 
 from flask import Flask, request
 
+from db import SQLighter
+
 TOKEN = os.environ.get('BOT_TOKEN')
 APPLINK = os.environ.get('LINK')
 
@@ -13,6 +15,17 @@ server = Flask(__name__)
 
 logger = telebot.logger
 telebot.logger.setLevel(logging.INFO)
+db = SQLighter()
+
+
+def add_user(func):
+    def wrapper(message):
+        uid = message.from_user.id
+        name = message.from_user.username
+        if not db.subscriber_exists(uid):
+            db.add_user(uid, name)
+        return func(message)
+
 
 with open('chats.json') as f:
     chat_user = json.load(f)
@@ -22,6 +35,7 @@ with open('groups.json') as f:
 
 
 @bot.message_handler(commands=['add'])
+@add_user
 def command_help(message):
     cid = message.chat.id
     uname = message.from_user.username
@@ -33,6 +47,7 @@ def command_help(message):
 
 
 @bot.message_handler(commands=['all'])
+@add_user
 def command_help(message):
     cid = message.chat.id
     if str(cid) in chat_user:
@@ -42,6 +57,7 @@ def command_help(message):
 
 
 @bot.message_handler(commands=['info'])
+@add_user
 def command_help(message):
     cid = message.chat.id
     greet = 'Nice chat! I know them: '
@@ -57,12 +73,14 @@ def command_help(message):
 
 
 @bot.message_handler(commands=['group'])
+@add_user
 def command_help(message):
     msg = bot.reply_to(message, "Name group and members. Your answer should be like group_name @member1 @member2...")
     bot.register_next_step_handler(msg, process_group_name)
 
 
 @bot.message_handler(commands=['log'])
+@add_user
 def command_help(message):
     bot.send_message(message.chat.id, str(chat_group))
     bot.send_message(message.chat.id, str(chat_user))
@@ -89,6 +107,7 @@ def process_group_name(message):
 
 
 @bot.message_handler(content_types=['text'])
+@add_user
 def get_text_messages(message):
     cid = message.chat.id
     text = message.text
