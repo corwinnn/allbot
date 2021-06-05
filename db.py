@@ -86,4 +86,4 @@ class SQLighter:
                 (cid,)
             )
             result = self.cursor.fetchall()
-            return [(res[1], res[2]) for res in result]
+            return [(res[2], res[3]) for res in result]
