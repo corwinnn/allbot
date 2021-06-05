@@ -19,12 +19,13 @@ db = SQLighter()
 
 
 def add_user(func):
-    def wrapper(message):
+    def wrapper(*args, **kwargs):
+        message = args[0]
         uid = message.from_user.id
         name = message.from_user.username
         if not db.subscriber_exists(uid):
             db.add_user(uid, name)
-        return func(message)
+        return func(*args, **kwargs)
 
 
 with open('chats.json') as f:
