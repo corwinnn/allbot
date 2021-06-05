@@ -20,11 +20,14 @@ class SQLighter:
     def add_user(self, uid, name):
         with self.connection:
             return self.cursor.execute(
-                f'INSERT INTO subscriber (uid, username) VALUES({uid}, {name})')
+                'INSERT INTO subscriber (uid, username) VALUES(%s, %s)',
+                (uid, name)
+            )
 
     def subscriber_exists(self, uid):
         with self.connection:
             self.cursor.execute(
-                f'SELECT * FROM subscriber WHERE uid = {uid}')
+                f'SELECT * FROM subscriber WHERE uid = %s',
+            (uid,))
             result = self.cursor.fetchall()
             return len(result)
