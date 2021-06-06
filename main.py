@@ -109,7 +109,7 @@ def command_info(message):
     member_group = db.member_group_list(cid)
     info_message += 'All: ' + ', '.join([member for member, group in member_group if group == ALL_ALIAS]) + '\n\n'
 
-    groups = [group for _, group in member_group if group != ALL_ALIAS]
+    groups = set([group for _, group in member_group if group != ALL_ALIAS])
     for group_name in groups:
         info_message += f'{group_name}: ' + \
                         ', '.join([member for member, group in member_group if group == group_name]) + '\n'
