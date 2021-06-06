@@ -82,6 +82,8 @@ def process_members(message):
     for name in names:
         db.add_member(cid, name, ALL_ALIAS)
 
+    bot.send_message(cid, 'Members have been added!')
+
 
 @bot.message_handler(commands=['all'])
 @add_user

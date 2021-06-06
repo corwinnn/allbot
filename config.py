@@ -19,7 +19,7 @@ after I came to the chat, or the people who were added with the /add command)\n\
 /group - add an alias for a group. For example, you'll be able to tag all boys in \
 the chat by @boys, and all girls by @girls\n
 For example, after /group command(in the next message) write "boys @Bob @Steve @Mark" and bot will tag them \
-if any message will contain @boys\n\n
+if any message contains @boys\n\n
 /info - learn about current known members and aliases\n\n
 For complaints and suggestions - write to @MikeHeller\n\n
 Public code repository - https://github.com/corwinnn/allbot
