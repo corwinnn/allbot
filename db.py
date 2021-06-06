@@ -2,7 +2,7 @@ import psycopg2
 
 from itertools import chain, repeat
 
-from config import DATABASE_PASSWORD, DATABASE_USER, DATABASE, DATABASE_HOST
+from configs import DATABASE_PASSWORD, DATABASE_USER, DATABASE, DATABASE_HOST
 
 
 class SQLighter:
