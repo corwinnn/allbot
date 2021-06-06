@@ -120,7 +120,7 @@ def command_group(message):
     """
     Create an alias for a group of members
     """
-    msg = bot.reply_to(message, "Name group and members. Your answer should be like group_name @member1 @member2 ...")
+    msg = bot.reply_to(message, "Name group and members. Your answer should be like:\n group_name @member1 @member2 ...")
     bot.register_next_step_handler(msg, process_group_name)
 
 
@@ -138,6 +138,12 @@ def process_group_name(message):
         return
 
     alias = text[0]
+    if alias[0] == '@':
+        bot.send_message(cid, "Group name shouldn't start with @")
+        bot.send_message(cid, "For example after such message you'll be able to tag them all by @Chaos:")
+        bot.send_message(cid, "Chaos @Dara @Borel @Mandor")
+        return
+
     names = text[1:]
     if any([name[0] != '@' for name in names]):
         bot.send_message(cid, "Please, list like this: group_name @member1 @member2 ...")
@@ -146,6 +152,7 @@ def process_group_name(message):
         return
 
     db.create_alias(cid, alias, names)
+    bot.send_message(cid, f'{alias} alias created!')
 
 
 @bot.message_handler(content_types=['text'])
