@@ -132,15 +132,16 @@ def process_group_name(message):
     cid = message.chat.id
     text = message.text.split()
     if len(text) == 1:
-        bot.send_message(cid, "No members, please use this format: **group_name** @member1 @member2 ...\n\
-                               For example after such message you'll be able to tag them all by @Chaos:")
+        bot.send_message(cid, "No members, please use this format: group_name @member1 @member2 ...")
+        bot.send_message(cid, "For example after such message you'll be able to tag them all by @Chaos:")
         bot.send_message(cid, "Chaos @Dara @Borel @Mandor")
         return
+
     alias = text[0]
     names = text[1:]
     if any([name[0] != '@' for name in names]):
-        bot.send_message(cid, "Please, list like this: **group_name** @member1 @member2 ...\n\
-                               For example after such message you'll be able to tag them all by @Chaos:")
+        bot.send_message(cid, "Please, list like this: group_name @member1 @member2 ...")
+        bot.send_message(cid, "For example after such message you'll be able to tag them all by @Chaos:")
         bot.send_message(cid, "Chaos @Dara @Borel @Mandor")
         return
 
