@@ -12,12 +12,13 @@ ALL_ALIAS = os.environ.get('ALL_ALIAS')
 ALIAS_START = '@'
 
 HELLO_TEXT = '''
-Hi! I want to help you to tag your friends in group chats.\n\n
-/all or @all - I'll tag all known members of the chat (I know members that have written something  in chat after the moment I've come
-to the chat or people that were added by /add command.\n\n
-/add - add people manually\n\n
-/group - add alias for a group. For example, you'll be able to call all boys in the chat by @boys, and all girls by @girls\n\n
+Hi! I want to help you tag your friends in group chats.\n\n
+/all or @all - I will tag all the known chat participants (I know the participants who wrote something \
+after I came to the chat, or the people who were added with the /add command)\n\n
+/add - add people manually for tagging them with /all after\n\n
+/group - add alias for a group. For example, you'll be able to tag all boys in \
+the chat by @boys, and all girls by @girls\n\n
 /info - learn about current known members and aliases\n\n
-For сomplaints and suggestions - write to @MikeHeller\n\n
+For complaints and suggestions - write to @MikeHeller\n\n
 Public code repository - https://github.com/corwinnn/allbot
 '''
