@@ -4,7 +4,7 @@ import telebot
 
 from flask import Flask, request
 
-from config import TOKEN, ALL_ALIAS, ALIAS_START, APPLINK, HELLO_TEXT
+from configs import TOKEN, ALL_ALIAS, ALIAS_START, APPLINK, HELLO_TEXT
 from db import SQLighter
 
 
