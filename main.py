@@ -168,9 +168,17 @@ def get_text_messages(message):
     """
     Checking messages for aliases
     """
+
+    def alias_clearing(alias):
+        """Clear alias from '@' and ','"""
+        cleared = alias[len(ALIAS_START):]
+        if cleared[-1] == ',':
+            cleared = cleared[:-1]
+        return cleared
+
     cid = message.chat.id
     words = message.text.split()
-    aliases = [w[len(ALIAS_START):] for w in words if w.startswith(ALIAS_START)]
+    aliases = [alias_clearing(w) for w in words if w.startswith(ALIAS_START)]
     if aliases:
         for alias in aliases:
             if alias == 'all':
