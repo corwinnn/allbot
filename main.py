@@ -28,9 +28,10 @@ def add_user(func):
         cid = message.chat.id
         name = message.from_user.username
         if not db.subscriber_exists(uid):
-            db.add_subscriber(uid, name)
+            db.add_subscriber(uid, name if name is not None else 'None')
         if cid < 0:  # group chats have cid < 0, personal chats have cid > 0
-            db.add_member(cid, '@' + name, ALL_ALIAS)
+            if name is not None:
+                db.add_member(cid, '@' + name, ALL_ALIAS)
             return func(*args, **kwargs)
         else:
             bot.send_message(cid, 'I was born for group chats, please use me only in groups.')
@@ -113,7 +114,7 @@ def command_info(message):
 
     groups = set([group for _, group in member_group if group != ALL_ALIAS])
     for group_name in groups:
-        
+
         # member[1:] to remove '@' from username because we don't want to tag
         info_message += f'{group_name}: ' + \
                         ', '.join([member[1:] for member, group in member_group if group == group_name]) + '\n'
