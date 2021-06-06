@@ -120,7 +120,7 @@ def command_group(message):
     """
     Create an alias for a group of members
     """
-    msg = bot.reply_to(message, "Name group and members. Your answer should be like:\n group_name @member1 @member2 ...")
+    msg = bot.reply_to(message, "Name group and members. Your answer should be like:\ngroup_name @member1 @member2 ...")
     bot.register_next_step_handler(msg, process_group_name)
 
 
