@@ -1,12 +1,8 @@
-import os
 import psycopg2
 
 from itertools import chain, repeat
 
-DATABASE_HOST = os.environ.get('DATABASE_HOST')
-DATABASE = os.environ.get('DATABASE')
-DATABASE_USER = os.environ.get('DATABASE_USER')
-DATABASE_PASSWORD = os.environ.get('DATABASE_PASSWORD')
+from config import DATABASE_PASSWORD, DATABASE_USER, DATABASE, DATABASE_HOST
 
 
 class SQLighter:
